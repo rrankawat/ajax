@@ -5,55 +5,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Add icon library -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-    @-webkit-keyframes placeHolderShimmer {
-      0% {
-        background-position: -468px 0;
-      }
-      100% {
-        background-position: 468px 0;
-      }
-    }
-
-    @keyframes placeHolderShimmer {
-      0% {
-        background-position: -468px 0;
-      }
-      100% {
-        background-position: 468px 0;
-      }
-    }
-
-    .content-placeholder {
-      display: inline-block;
-      -webkit-animation-duration: 1s;
-      animation-duration: 1s;
-      -webkit-animation-fill-mode: forwards;
-      animation-fill-mode: forwards;
-      -webkit-animation-iteration-count: infinite;
-      animation-iteration-count: infinite;
-      -webkit-animation-name: placeHolderShimmer;
-      animation-name: placeHolderShimmer;
-      -webkit-animation-timing-function: linear;
-      animation-timing-function: linear;
-      background: #f6f7f8;
-      background: -webkit-gradient(linear, left top, right top, color-stop(8%, #eeeeee), color-stop(18%, #dddddd), color-stop(33%, #eeeeee));
-      background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-      background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-      -webkit-background-size: 800px 104px;
-      background-size: 800px 104px;
-      height: inherit;
-      position: relative;
-    }
-
-    .post_data
-    {
-      padding:24px;
-      border:1px solid #f9f9f9;
-      border-radius: 5px;
-      margin-bottom: 24px;
-      box-shadow: 10px 10px 5px #eeeeee;
-    }
+	/* Style buttons */
+	.buttonload {
+	  background-color: #4CAF50; /* Green background */
+	  border: none; /* Remove borders */
+	  color: white; /* White text */
+	  padding: 12px 16px; /* Some padding */
+	  font-size: 16px /* Set a font size */
+	}
     </style>
 </head>
 <body>
@@ -61,7 +23,7 @@
 		<h1>Infinate Scroll Page</h1><br/>
 		<div id="load_data"></div>
 		<div id="load_data_message"></div><br/>
-		<button class="btn btn-success">Load More</button>
+		<button class="btn btn-primary">Load More</button><br/><br/>
 	</div>
 
 	<script>
@@ -70,20 +32,13 @@
 			var start = 0;
 
 			function lazzy_loader(limit) {
-				var output = '';
-				for(var count=0; count<limit; count++) {
-					output += '<div class="post-data">';
-					output += '<p><span class="content-placeholder" style="width:100%; height=30px;">&nbsp;</span></p>';
-					output += '<p><span class="content-placeholder" style="width:100%; height:100px;">&nbsp;</span></p>';
-					output += '</div>';
-				}
-				$("#load_data_message").html(output);
+				$("button").html('Loading <i class="fa fa-spinner fa-spin"></i>');
 			}
 			lazzy_loader(limit);
 
 			function load_data(limit, start) {
 				$.ajax({
-					url:"http://localhost/crud/scroll/fetch",
+					url:"http://localhost/ajax-btn/scroll/fetch",
 					method:"POST",
 					data:{
 						limit:limit,
@@ -97,7 +52,7 @@
 						else {
 							setTimeout(function(){
 								$('#load_data').append(data);
-								$('#load_data_message').html('');
+								$("button").html('Load More');
 							}, 1000);
 						}
 					},
